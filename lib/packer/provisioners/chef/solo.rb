@@ -36,7 +36,9 @@ module Packer
           self.__add_string('install_command', command)
         end
 
-        # TODO How to handle json?
+        def json(node_attributes)
+          self.__add_string('json', node_attributes)
+        end
 
         def prevent_sudo(bool)
           self.__add_boolean('prevent_sudo', bool)
