@@ -35,7 +35,7 @@ module Packer
           status = thread.value
         end
       end
-      raise CommandExecutionError.new(stderr) unless status == 0
+      raise CommandExecutionError.new(stdout) unless status == 0
       stdout
     end
 
