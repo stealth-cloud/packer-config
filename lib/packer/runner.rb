@@ -4,6 +4,15 @@ require 'shellwords'
 module Packer
   class Runner
     class CommandExecutionError < StandardError
+      def initialize(stdout, stderr)
+        if(stderr.empty?)
+          message = stdout
+        else
+          message = stderr
+        end
+
+        super(message)
+      end
     end
 
     def self.run!(*args, quiet: false)
@@ -35,7 +44,7 @@ module Packer
           status = thread.value
         end
       end
-      raise CommandExecutionError.new(stderr) unless status == 0
+      raise CommandExecutionError.new(stdout, stderr) unless status == 0
       stdout
     end
 
