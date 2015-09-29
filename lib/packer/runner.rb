@@ -17,6 +17,10 @@ module Packer
 
     def self.run!(*args, quiet: false)
       cmd = Shellwords.shelljoin(args.flatten)
+
+      debug = cmd.include? '-debug'
+      quiet = quiet && !debug
+
       status = 0
       stdout = ''
       stderr = ''
@@ -37,6 +41,12 @@ module Packer
           Thread.new do
             until (raw_line = std_err.gets).nil? do
               stderr << raw_line
+            end
+          end
+
+          if debug
+            Thread.new do
+              std_in.puts $stdin.gets while thread.alive?
             end
           end
 
