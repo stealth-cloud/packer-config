@@ -36,7 +36,7 @@ module Packer
       self.envvar = EnvVar.new
     end
 
-    def validate(*options)
+    def validate(options: [])
       super
       verify_packer_version
       if self.builders.length == 0
@@ -102,7 +102,7 @@ module Packer
     class PackerBuildError < StandardError
     end
 
-    def build(quiet: false, *options)
+    def build(options: [], quiet: false)
       self.validate
       self.write
       stdout = nil
