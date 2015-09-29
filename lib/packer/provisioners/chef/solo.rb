@@ -37,7 +37,7 @@ module Packer
         end
 
         def json(node_attributes)
-          self.__add_string('json', node_attributes)
+          self.__add_hash('json', node_attributes)
         end
 
         def prevent_sudo(bool)
