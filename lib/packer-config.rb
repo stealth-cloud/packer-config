@@ -36,7 +36,7 @@ module Packer
       self.envvar = EnvVar.new
     end
 
-    def validate
+    def validate(*options)
       super
       verify_packer_version
       if self.builders.length == 0
@@ -49,7 +49,7 @@ module Packer
       stdout = nil
       Dir.chdir(File.dirname(self.output_file)) do
         begin
-          stdout = Packer::Runner.run! self.packer, 'validate', File.basename(self.output_file), quiet: true
+          stdout = Packer::Runner.run! self.packer, 'validate', options, File.basename(self.output_file), quiet: true
         rescue Packer::Runner::CommandExecutionError => e
           raise PackerBuildError.new(e.to_s)
         end
@@ -102,13 +102,13 @@ module Packer
     class PackerBuildError < StandardError
     end
 
-    def build(quiet: false)
+    def build(quiet: false, *options)
       self.validate
       self.write
       stdout = nil
       Dir.chdir(File.dirname(self.output_file)) do
         begin
-          stdout = Packer::Runner.run! self.packer, 'build', self.packer_options, File.basename(self.output_file), quiet: quiet
+          stdout = Packer::Runner.run! self.packer, 'build', self.packer_options, options, File.basename(self.output_file), quiet: quiet
         rescue Packer::Runner::CommandExecutionError => e
           raise PackerBuildError.new(e.to_s)
         end

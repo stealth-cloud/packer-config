@@ -17,6 +17,7 @@ module Packer
 
     def self.run!(*args, quiet: false)
       cmd = Shellwords.shelljoin(args.flatten)
+      binding.pry
       status = 0
       stdout = ''
       stderr = ''
