@@ -17,6 +17,10 @@ module Packer
         self.communicators = %w(none ssh winrm)
       end
 
+      def windows_password_timeout(time)
+        self.__add_string('windows_password_timeout', time)
+      end
+
       def access_key(key)
         self.__add_string('access_key', key)
       end
